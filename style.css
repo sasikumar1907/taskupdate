@@ -1,0 +1,268 @@
+body {
+    font-family: 'Open Sans', Arial, sans-serif;
+    margin: 0;
+    background-color: #e9ecef;
+    color: #343a40;
+    line-height: 1.6;
+}
+
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.dashboard-header {
+    background-color: #343a40;
+    color: white;
+    padding: 15px 30px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.header-top h1 { margin: 0; font-size: 1.8em; }
+.current-date-container { font-size: 0.9em; }
+
+.add-task-panel {
+    background-color: #495057;
+    padding: 15px;
+    border-radius: 6px;
+    margin-top: 10px;
+}
+
+.add-task-panel h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.3em;
+    text-align: center;
+}
+
+.add-task-form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+    align-items: end;
+}
+
+.add-task-form input[type="text"],
+.add-task-form input[type="date"],
+.add-task-form select, /* Added select */
+.add-task-form textarea {
+    padding: 10px;
+    border: 1px solid #6c757d;
+    border-radius: 4px;
+    background-color: #f8f9fa;
+    color: #343a40;
+    font-size: 0.95em;
+    width: 100%;
+    box-sizing: border-box;
+    height: 40px; /* Consistent height */
+}
+.add-task-form textarea {
+    height: auto; /* Allow textarea to grow */
+    min-height: 60px;
+}
+
+
+.add-task-form #projectName,
+.add-task-form #taskName { grid-column: 1 / -1; }
+
+.add-task-form #personName { /* Takes one column by default */ }
+
+.add-task-form #taskRemark {
+    grid-column: 1 / -1;
+    resize: vertical;
+}
+
+.add-task-form .date-inputs {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 10px;
+}
+.add-task-form .date-inputs > div {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+.add-task-form .date-inputs label {
+    font-size: 0.8em;
+    margin-bottom: 3px;
+    color: #ced4da;
+}
+.add-task-form .date-inputs input[type="date"] { /* Override height for date consistency */
+    height: 40px;
+}
+
+
+.add-task-form button {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 1em;
+    height: 40px;
+    grid-column: 1 / -1;
+    justify-self: end;
+}
+.add-task-form button:hover { background-color: #218838; }
+
+.kanban-board {
+    display: flex;
+    flex-grow: 1;
+    padding: 20px;
+    gap: 20px;
+    overflow-x: auto;
+}
+
+.kanban-column {
+    background-color: #dee2e6;
+    border-radius: 8px;
+    padding: 15px;
+    min-width: 280px;
+    max-width: 350px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.kanban-column h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #adb5bd;
+    font-size: 1.2em;
+    color: #495057;
+    text-align: center;
+}
+
+.task-list {
+    flex-grow: 1;
+    min-height: 100px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+.task-card {
+    background-color: white;
+    border: 1px solid #ced4da;
+    border-left: 5px solid #007bff;
+    border-radius: 6px;
+    padding: 12px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+    font-size: 0.9em;
+}
+
+.task-card.pending { border-left-color: #ffc107; }
+.task-card.in-process { border-left-color: #17a2b8; }
+.task-card.completed { border-left-color: #28a745; opacity: 0.9; }
+.task-card.completed .task-name { text-decoration: line-through; }
+.task-card.hold { border-left-color: #dc3545; }
+
+.task-card .task-project {
+    font-size: 0.8em;
+    color: #6c757d;
+    margin-bottom: 4px;
+    font-style: italic;
+}
+.task-card .task-name {
+    font-weight: 600;
+    font-size: 1.05em;
+    margin-bottom: 5px;
+    color: #212529;
+}
+.task-card .task-assigned,
+.task-card .task-dates,
+.task-card .task-planned-duration, /* New */
+.task-card .task-completion-time {
+    font-size: 0.85em;
+    color: #6c757d;
+    margin-bottom: 3px;
+}
+.task-card .task-dates span,
+.task-card .task-planned-duration span, /* New */
+.task-card .task-completion-time span {
+    font-weight: 600;
+    color: #495057;
+}
+.task-card .task-remark {
+    font-size: 0.88em;
+    color: #495057;
+    margin-top: 8px;
+    padding: 5px;
+    background-color: #f8f9fa;
+    border-radius: 3px;
+    border: 1px dashed #ced4da;
+    word-break: break-word;
+    white-space: pre-wrap;
+}
+.task-card .task-remark:empty::before {
+    content: "No remarks yet.";
+    font-style: italic;
+    color: #adb5bd;
+}
+
+.task-card .task-status-control {
+    margin-top: 10px;
+    margin-bottom: 8px;
+}
+.task-card .task-status-control label {
+    font-size: 0.8em;
+    margin-right: 5px;
+    color: #495057;
+}
+.task-card .task-status-control select {
+    padding: 5px 8px;
+    border-radius: 4px;
+    border: 1px solid #ced4da;
+    font-size: 0.9em;
+}
+
+.task-card .task-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.task-card .edit-remark-btn,
+.task-card .delete-btn {
+    background-color: transparent;
+    border: 1px solid;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85em;
+    transition: background-color 0.2s, color 0.2s;
+}
+.task-card .edit-remark-btn { color: #007bff; border-color: #007bff; }
+.task-card .edit-remark-btn:hover { background-color: #007bff; color: white; }
+
+.task-card .delete-btn { color: #dc3545; border-color: #dc3545;}
+.task-card .delete-btn:hover { background-color: #dc3545; color: white; }
+
+/* Responsive adjustments */
+@media (max-width: 1200px) { /* ... */ }
+@media (max-width: 992px) {
+    .kanban-board { flex-direction: column; align-items: stretch; overflow-x: hidden; }
+    .kanban-column { min-width: 100%; max-width: 100%; margin-bottom: 20px; }
+    .add-task-form { grid-template-columns: 1fr; }
+    .add-task-form .date-inputs { flex-direction: column; }
+    .add-task-form button { justify-self: stretch; }
+}
+@media (max-width: 576px) {
+    .header-top { flex-direction: column; align-items: flex-start; }
+    .header-top h1 { margin-bottom: 10px; }
+    .dashboard-header { padding: 15px; }
+    .kanban-board { padding: 15px; gap: 15px; }
+}

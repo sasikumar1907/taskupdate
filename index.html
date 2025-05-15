@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <div class="header-top">
+                <h1>Task Dashboard</h1>
+                <div class="current-date-container">
+                    Current Date: <span id="currentDate"></span>
+                </div>
+            </div>
+            <div class="add-task-panel">
+                <h2>Add New Task</h2>
+                <div class="add-task-form">
+                    <!-- Changed to select -->
+                    <select id="projectName" required>
+                        <option value="">Select Project...</option>
+                        {/* Options will be added by JS */}
+                    </select>
+                    <input type="text" id="taskName" placeholder="Task description..." required>
+                     <!-- Changed to select -->
+                    <select id="personName" required>
+                        <option value="">Assign to...</option>
+                        {/* Options will be added by JS */}
+                    </select>
+                    <textarea id="taskRemark" placeholder="Initial Remark (optional)..."></textarea>
+                    <div class="date-inputs">
+                        <div>
+                            <label for="startDate">Start Date:</label>
+                            <input type="date" id="startDate" required>
+                        </div>
+                        <div>
+                            <label for="endDate">End Date:</label>
+                            <input type="date" id="endDate" required>
+                        </div>
+                    </div>
+                    <button id="addTaskBtn">Add Task</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="kanban-board">
+            <div class="kanban-column" id="pendingColumn">
+                <h3>Pending</h3>
+                <div class="task-list" id="pendingTasksList"></div>
+            </div>
+            <div class="kanban-column" id="inProcessColumn">
+                <h3>In Process</h3>
+                <div class="task-list" id="inProcessTasksList"></div>
+            </div>
+            <div class="kanban-column" id="completedColumn">
+                <h3>Completed</h3>
+                <div class="task-list" id="completedTasksList"></div>
+            </div>
+            <div class="kanban-column" id="holdColumn">
+                <h3>On Hold</h3>
+                <div class="task-list" id="holdTasksList"></div>
+            </div>
+        </main>
+    </div>
+    <script src="index.js"></script>
+</body>
+</html>
