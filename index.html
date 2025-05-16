@@ -12,21 +12,22 @@
         <header class="dashboard-header">
             <div class="header-top">
                 <h1>Task Dashboard</h1>
-                <div class="current-date-container">
-                    Current Date: <span id="currentDate"></span>
-                </div>
-                <a href="report.html" class="report-button">View Report</a>
+                 <div class="header-actions">
+                     <div class="current-date-container">
+                        Current Date: <span id="currentDate"></span>
+                    </div>
+                    <!-- Added Report Button -->
+                    <a href="report.html" class="report-button">View Report</a>
+                 </div>
             </div>
             <div class="add-task-panel">
                 <h2>Add New Task</h2>
                 <div class="add-task-form">
-                    <!-- Changed to select -->
                     <select id="projectName" required>
                         <option value="">Select Project...</option>
                         {/* Options will be added by JS */}
                     </select>
                     <input type="text" id="taskName" placeholder="Task description..." required>
-                     <!-- Changed to select -->
                     <select id="personName" required>
                         <option value="">Assign to...</option>
                         {/* Options will be added by JS */}
@@ -66,6 +67,6 @@
             </div>
         </main>
     </div>
-    <script src="index.js"></script>
+    <script src="index.js"></script> {/* Changed from script.js to index.js */}
 </body>
 </html>

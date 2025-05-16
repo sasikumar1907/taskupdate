@@ -7,11 +7,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const holdTasksSpan = document.getElementById('holdTasks');
 
     // Filter Inputs
-    const filterStatusSelect = document.getElementById('filterStatus'); // New: Status filter
+    const filterStatusSelect = document.getElementById('filterStatus'); // Status filter
     const filterProjectSelect = document.getElementById('filterProject');
     const filterPersonSelect = document.getElementById('filterPerson');
+    // Removed reference to filterDateInput
+
 
     let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+     // Ensure tasks loaded from storage have timer properties for consistency in report, default to 0/null if missing
+     tasks = tasks.map(task => {
+         if (task.timeSpent === undefined) task.timeSpent = 0;
+         if (task.timerStartTime === undefined) task.timerStartTime = null; // timerStartTime isn't displayed but good practice
+         return task;
+     });
+
+
     let currentFilteredTasks = [...tasks]; // Keep track of tasks after filtering
 
     // Re-use the date difference function (still needed for duration calculations)
@@ -30,8 +40,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const diffDays = Math.round(Math.abs((endDate - startDate) / oneDay)) + 1;
 
+         // Handle cases where start > end date for duration calculation consistency
+         if (new Date(dateStr1) > new Date(dateStr2)) return 0;
+
+
         return diffDays;
     }
+
+     // Helper to format total seconds into HH:MM:SS (Copied from index.js)
+    function formatTime(totalSeconds) {
+        if (totalSeconds < 0 || isNaN(totalSeconds)) {
+             totalSeconds = 0; // Handle potential invalid input
+         }
+        const hours = Math.floor(totalSeconds / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = Math.floor(totalSeconds % 60);
+
+        const paddedHours = hours.toString().padStart(2, '0');
+        const paddedMinutes = minutes.toString().padStart(2, '0');
+        const paddedSeconds = seconds.toString().padStart(2, '0');
+
+        return `${paddedHours}:${paddedMinutes}:${paddedSeconds}`;
+    }
+
 
     // Function to populate project and person dropdowns (Status is hardcoded in HTML)
     function populateFilterDropdowns() {
@@ -65,9 +96,13 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderReportTable(tasksToRender) {
         reportTableBody.innerHTML = ''; // Clear current table body
 
+        // Adjust colspan if the number of columns changes
+        const numberOfColumns = reportTableBody.closest('table').querySelectorAll('th').length;
+
+
         if (tasksToRender.length === 0) {
             const noDataRow = document.createElement('tr');
-            noDataRow.innerHTML = `<td colspan="9" style="text-align: center; font-style: italic; color: #6c757d;">No tasks match the current filters.</td>`;
+            noDataRow.innerHTML = `<td colspan="${numberOfColumns}" style="text-align: center; font-style: italic; color: #6c757d;">No tasks match the current filters.</td>`;
             reportTableBody.appendChild(noDataRow);
             return;
         }
@@ -110,7 +145,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Planned Duration
             const tdPlannedDuration = document.createElement('td');
-            if (task.startDate && task.endDate) {
+             // Check if dates are valid and start <= end before calculating duration
+            if (task.startDate && task.endDate && new Date(task.startDate) <= new Date(task.endDate)) {
                  const durationDays = calculateDateDifferenceInDays(task.startDate, task.endDate);
                  tdPlannedDuration.textContent = `${durationDays} day(s)`;
             } else {
@@ -122,32 +158,22 @@ document.addEventListener('DOMContentLoaded', () => {
             // Actual Duration (Completion Time)
             const tdActualDuration = document.createElement('td');
             if (task.status === 'Completed' && task.startDate && task.completionDate) {
-                 const daysTaken = calculateDateDifferenceInDays(task.startDate, task.completionDate);
-                  // Only show if calculation is valid and results in >= 1 days (handle potential single-day task completed same day)
-                 if (daysTaken >= 1) {
-                      tdActualDuration.textContent = `${daysTaken} day(s)`;
-                 } else {
-                      // If start and completion are the same day, calculateDateDifferenceInDays gives 1.
-                      // This case might be if start date is > completion date or invalid dates.
-                      // Let's be explicit for 1 day completion.
-                       const startDateTime = new Date(task.startDate + 'T00:00:00').getTime();
-                       const completionDateTime = new Date(task.completionDate + 'T00:00:00').getTime();
-                       if (startDateTime <= completionDateTime) { // Valid completion range
-                           if (daysTaken === 1) {
-                               tdActualDuration.textContent = '1 day'; // Consistent with planned duration
-                           } else if (daysTaken > 1) {
-                               tdActualDuration.textContent = `${daysTaken} day(s)`;
-                           } else { // Should not happen with valid dates and start <= completion
-                                tdActualDuration.textContent = 'N/A';
-                           }
-                       } else { // Completion date before start date
-                           tdActualDuration.textContent = 'Invalid Date';
-                       }
+                 // Check if dates are valid for calculation (completion date >= start date)
+                 if (task.startDate && task.completionDate && new Date(task.startDate) <= new Date(task.completionDate)) {
+                     const daysTaken = calculateDateDifferenceInDays(task.startDate, task.completionDate);
+                     tdActualDuration.textContent = `${daysTaken} day(s)`;
+                 } else if (task.startDate && task.completionDate) {
+                      tdActualDuration.textContent = 'Invalid Date'; // Indicate if completion is before start
                  }
             } else {
                 tdActualDuration.textContent = 'N/A';
             }
             row.appendChild(tdActualDuration);
+
+            // Time Spent (New Column)
+            const tdTimeSpent = document.createElement('td');
+            tdTimeSpent.textContent = formatTime(task.timeSpent || 0); // Display time spent
+            row.appendChild(tdTimeSpent);
 
 
             // Remark
@@ -173,6 +199,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const filterStatus = filterStatusSelect.value; // Get selected status
         const filterProject = filterProjectSelect.value;
         const filterPerson = filterPersonSelect.value;
+        // Removed reference to filterDateInput
+
 
         currentFilteredTasks = tasks.filter(task => {
             let match = true;
@@ -192,7 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 match = false;
             }
 
-            // Removed Date Filtering Logic
+            // Date filtering is removed
 
             return match;
         });

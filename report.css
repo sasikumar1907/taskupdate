@@ -100,7 +100,7 @@ body { /* Ensure base styles are included if style.css is not linked */
     font-weight: 600;
 }
 
-/* Removed input[type="date"] from this selector */
+.report-filters input[type="date"], /* Kept date input style just in case, though not used in HTML */
 .report-filters select {
     padding: 8px 10px;
     border: 1px solid #ced4da;
@@ -126,7 +126,7 @@ table {
     border-radius: 8px; /* Apply border-radius to table container maybe */
     overflow: hidden; /* Ensures border-radius clips content */
     box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-    min-width: 800px; /* Ensure table is wide enough on smaller screens to trigger scroll */
+    min-width: 900px; /* Increased min-width slightly for the extra column */
 }
 
 th, td {
@@ -159,15 +159,16 @@ td {
 }
 
 /* Specific column widths/styles if needed */
-td:nth-child(1) { width: 10%; } /* Project */
-td:nth-child(2) { width: 20%; } /* Task Description */
-td:nth-child(3) { width: 10%; } /* Assigned To */
+td:nth-child(1) { width: 8%; } /* Project */
+td:nth-child(2) { width: 18%; } /* Task Description */
+td:nth-child(3) { width: 9%; } /* Assigned To */
 td:nth-child(4) { width: 8%; }  /* Status */
 td:nth-child(5),
 td:nth-child(6) { width: 8%; }  /* Start/End Date */
 td:nth-child(7),
-td:nth-child(8) { width: 7%; } /* Durations */
-td:nth-child(9) { width: 22%; } /* Remark */
+td:nth-child(8) { width: 7%; } /* Planned/Actual Durations */
+td:nth-child(9) { width: 7%; font-family: 'Courier New', Courier, monospace;} /* Time Spent */
+td:nth-child(10) { width: 17%; } /* Remark */
 
 
 /* Status coloring in table cells */
@@ -209,6 +210,7 @@ td.remark-cell {
          flex: none; /* Remove flex grow */
          width: 100%; /* Take full width */
      }
+     table { min-width: 700px; /* Adjust min-width for smaller screens if needed */ }
 }
 
 @media (max-width: 576px) {
@@ -236,4 +238,5 @@ td.remark-cell {
          flex: none;
          width: 100%;
      }
+     table { min-width: 600px; /* Further adjust min-width */ }
 }
