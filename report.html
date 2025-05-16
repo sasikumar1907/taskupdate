@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Report</title>
+    <link rel="stylesheet" href="style.css"> <!-- Optional: Keep base styles -->
+    <link rel="stylesheet" href="report.css"> <!-- Specific report styles -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="report-container">
+        <header class="report-header dashboard-header"> <!-- Re-use dashboard header styles -->
+             <h1>Task Report</h1>
+             <div class="report-links">
+                 <a href="index.html" class="dashboard-link">Back to Dashboard</a>
+             </div>
+        </header>
+
+        <main class="report-content">
+            <div class="report-summary">
+                <h3>Summary</h3>
+                <p>Total Tasks: <span id="totalTasks">0</span></p>
+                <p>Pending: <span id="pendingTasks">0</span></p>
+                <p>In Process: <span id="inProcessTasks">0</span></p>
+                <p>Completed: <span id="completedTasks">0</span></p>
+                <p>On Hold: <span id="holdTasks">0</span></p>
+            </div>
+
+            <div class="report-filters">
+                 <h3>Filters</h3>
+                 <div class="filter-controls">
+                      <!-- Added Status Filter -->
+                     <div class="filter-group">
+                         <label for="filterStatus">Status:</label>
+                         <select id="filterStatus">
+                             <option value="">All Statuses</option>
+                             <option value="Pending">Pending</option>
+                             <option value="In Process">In Process</option>
+                             <option value="Completed">Completed</option>
+                             <option value="Hold">On Hold</option>
+                         </select>
+                     </div>
+                      <div class="filter-group">
+                         <label for="filterProject">Project:</label>
+                         <select id="filterProject">
+                             <option value="">All Projects</option>
+                             <!-- Project options populated by JS -->
+                         </select>
+                     </div>
+                     <div class="filter-group">
+                         <label for="filterPerson">Assigned To:</label>
+                         <select id="filterPerson">
+                             <option value="">All Persons</option>
+                             <!-- Person options populated by JS -->
+                         </select>
+                     </div>
+                 </div>
+            </div>
+
+            <div class="report-table-container"> <!-- Added container for horizontal scrolling -->
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Project</th>
+                            <th>Task Description</th>
+                            <th>Assigned To</th>
+                            <th>Status</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Planned Duration</th>
+                            <th>Actual Duration</th>
+                            <th>Remark</th>
+                        </tr>
+                    </thead>
+                    <tbody id="reportTableBody">
+                        <!-- Table rows will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <script src="report.js"></script>
+</body>
+</html>

@@ -1,0 +1,239 @@
+/* Re-using some styles from style.css */
+/* Add report specific styles */
+
+body { /* Ensure base styles are included if style.css is not linked */
+    font-family: 'Open Sans', Arial, sans-serif;
+    margin: 0;
+    background-color: #e9ecef;
+    color: #343a40;
+    line-height: 1.6;
+}
+
+.report-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #e9ecef; /* Same as body background */
+}
+
+.report-header {
+     /* Inherits dashboard-header styles from style.css */
+     background-color: #343a40; /* Ensure background if style.css not linked */
+     color: white; /* Ensure color if style.css not linked */
+     padding: 15px 30px;
+     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+     display: flex; /* Make it flex to align title and links */
+     justify-content: space-between;
+     align-items: center;
+}
+
+.report-header h1 {
+    margin: 0;
+    font-size: 1.8em;
+}
+
+.report-links a {
+    color: white;
+    text-decoration: none;
+    padding: 5px 10px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 4px;
+    transition: background-color 0.2s, border-color 0.2s;
+    font-size: 0.9em;
+}
+.report-links a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: white;
+}
+
+
+.report-content {
+    padding: 20px;
+    flex-grow: 1;
+}
+
+.report-summary, .report-filters {
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.report-summary h3, .report-filters h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+    color: #343a40;
+    border-bottom: 1px solid #dee2e6;
+    padding-bottom: 8px;
+}
+
+.report-summary p {
+    margin-bottom: 5px;
+    font-size: 0.95em;
+}
+.report-summary span {
+    font-weight: 600;
+    color: #495057;
+}
+
+/* Filter Controls Styling */
+.report-filters .filter-controls {
+    display: flex; /* Arrange filters in a row */
+    gap: 20px; /* Space between filter groups */
+    flex-wrap: wrap; /* Allow filters to wrap on smaller screens */
+    align-items: flex-end; /* Align items to the bottom */
+}
+
+.report-filters .filter-group {
+    display: flex;
+    flex-direction: column; /* Stack label and input/select */
+    flex: 1; /* Allow groups to grow */
+    min-width: 150px; /* Minimum width for filter group */
+}
+
+.report-filters label {
+    font-size: 0.85em;
+    margin-bottom: 5px;
+    color: #495057;
+    font-weight: 600;
+}
+
+/* Removed input[type="date"] from this selector */
+.report-filters select {
+    padding: 8px 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 0.9em;
+    color: #495057;
+    background-color: #f8f9fa;
+    width: 100%; /* Make input/select fill its container */
+    box-sizing: border-box;
+}
+
+
+/* --- Table Grid Styling --- */
+.report-table-container {
+    overflow-x: auto; /* Add horizontal scroll on small screens */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse; /* Remove space between borders */
+    background-color: white;
+    border-radius: 8px; /* Apply border-radius to table container maybe */
+    overflow: hidden; /* Ensures border-radius clips content */
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    min-width: 800px; /* Ensure table is wide enough on smaller screens to trigger scroll */
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #dee2e6;
+    vertical-align: top; /* Align cell content to top */
+}
+
+th {
+    background-color: #f8f9fa;
+    color: #495057;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85em;
+    border-bottom: 2px solid #adb5bd;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2; /* Zebra striping */
+}
+
+tbody tr:hover {
+    background-color: #e9ecef;
+}
+
+td {
+    font-size: 0.9em;
+    color: #343a40;
+}
+
+/* Specific column widths/styles if needed */
+td:nth-child(1) { width: 10%; } /* Project */
+td:nth-child(2) { width: 20%; } /* Task Description */
+td:nth-child(3) { width: 10%; } /* Assigned To */
+td:nth-child(4) { width: 8%; }  /* Status */
+td:nth-child(5),
+td:nth-child(6) { width: 8%; }  /* Start/End Date */
+td:nth-child(7),
+td:nth-child(8) { width: 7%; } /* Durations */
+td:nth-child(9) { width: 22%; } /* Remark */
+
+
+/* Status coloring in table cells */
+td.status-pending { color: #d39e00; font-weight: bold; } /* Darker yellow */
+td.status-in-process { color: #117a8b; font-weight: bold; } /* Darker cyan */
+td.status-completed { color: #1e7e34; font-weight: bold; } /* Darker green */
+td.status-hold { color: #c82333; font-weight: bold; } /* Darker red */
+
+/* Style for remark cell */
+td.remark-cell {
+    white-space: pre-wrap; /* Preserve line breaks */
+    word-break: break-word; /* Prevent overflow for long words */
+    font-size: 0.85em;
+    color: #5a6268;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .report-content { padding: 15px; }
+    .report-header { padding: 15px; }
+
+    .report-summary { margin-bottom: 15px; }
+    .report-summary p { font-size: 0.9em; }
+
+    /* Table specific adjustments for smaller screens are handled by overflow-x: auto */
+    th, td {
+        padding: 10px; /* Reduce padding */
+        font-size: 0.85em;
+    }
+     th { font-size: 0.8em; }
+
+     /* Stack filters vertically on smaller screens */
+     .report-filters .filter-controls {
+         flex-direction: column;
+         gap: 15px;
+     }
+     .report-filters .filter-group {
+         min-width: auto; /* Remove min-width when stacking */
+         flex: none; /* Remove flex grow */
+         width: 100%; /* Take full width */
+     }
+}
+
+@media (max-width: 576px) {
+    .report-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+     .report-header h1 { margin-bottom: 0; }
+    .report-content { padding: 10px; }
+
+    th, td {
+        padding: 8px; /* Further reduce padding */
+         font-size: 0.8em;
+    }
+     th { font-size: 0.75em; }
+
+     /* Ensure filters stay stacked on very small screens */
+     .report-filters .filter-controls {
+        flex-direction: column;
+        gap: 10px;
+    }
+     .report-filters .filter-group {
+         min-width: auto;
+         flex: none;
+         width: 100%;
+     }
+}

@@ -73,7 +73,7 @@ body {
 .add-task-form #projectName,
 .add-task-form #taskName { grid-column: 1 / -1; }
 
-.add-task-form #personName { /* Takes one column by default */ }
+
 
 .add-task-form #taskRemark {
     grid-column: 1 / -1;
